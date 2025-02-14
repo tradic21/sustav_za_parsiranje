@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relacijska Algebra</title>
+  <style>      
+    body {
+      background-color: #1f2833;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    h2, h3 {
+      color: #ffffff;
+      margin-top: 20px;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    form {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    input[type="text"] {
+      padding: 12px 20px;
+      width: 70%;
+      border: none;
+      border-radius: 4px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #45A29E;
+      color: #0B0C10;
+      cursor: pointer;
+      margin: 10px;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #66FCF1;
+    }
+    
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 4px;
+      overflow: hidden;
+      background-color: #45a29e;
+      color:#000000;
+    }
+    
+    th, td {
+      border: 1px solid #0b0c10;
+      padding: 12px;
+      text-align: center;
+      
+    }
+    
+    th {
+      background-color: #0b0c10;
+      color:#ffffff;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #66fcf1;
+      color:#000000;
+    }
+    .data-table {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Relacijska Algebra</h2>
+  
+  <div id="special-buttons" style="text-align: center; margin: 20px;">
+    <button type="button" onclick="insertOp('π')">π</button>
+    <button type="button" onclick="insertOp('σ')">σ</button>
+    <button type="button" onclick="insertOp('⨝')">⨝</button>
+    <button type="button" onclick="insertOp('∪')">∪</button>
+    <button type="button" onclick="insertOp('∩')">∩</button>
+    <button type="button" onclick="insertOp('-(')">-(</button>
+    <button type="button" onclick="insertOp(')')">)</button>
+    <button type="button" onclick="insertOp('×')">×</button>
+  </div>
+  
+  <script>
+    function insertOp(op) {
+      var inputField = document.getElementsByName('upit')[0];
+      // Dodaje simbol na kraj trenutnog unosa
+      inputField.value += op;
+      inputField.focus();
+    }
+  </script>
+  
+
+  <form method="POST">
+    <input type="text" name="upit" placeholder="Unesite upit" required>
+    <button type="submit">Izvrši</button>
+  </form>
+  
+  {% if studenti and studenti|length > 0 %}
+    <h3>Tablica STUDENT</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ime</th>
+          <th>prezime</th>
+          <th>godina</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for red in studenti %}
+          <tr>
+            {% for celija in red %}
+              <td>{{ celija }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  
+ 
+  {% if prijave and prijave|length > 0 %}
+    <h3>Tablica PRIJAVA</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ime</th>
+          <th>predmet</th>
+          <th>ocjena</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for red in prijave %}
+          <tr>
+            {% for celija in red %}
+              <td>{{ celija }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  
+
+  {% if rezultat and rezultat|length > 0 %}
+    <h3>Rezultat Upita:</h3>
+    <table>
+      <thead>
+        <tr>
+          {% for i in range(rezultat[0]|length) %}
+            <th>Stupac {{ i + 1 }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for red in rezultat %}
+          <tr>
+            {% for celija in red %}
+              <td>{{ celija }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif rezultat is not none %}
+    <h3>Rezultat Upita: Prazan</h3>
+  {% endif %}
+  
+</body>
+</html>
